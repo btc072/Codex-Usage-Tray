@@ -1,77 +1,79 @@
 # Codex Usage Tray
 
-Компактная утилита для Windows, которая показывает остаток пятичасового и недельного лимита Codex прямо в системном трее. Два процента на значке позволяют следить за лимитами во время работы, а карточка по наведению показывает подробности.
+[English](README.md) | [Русский](README.ru.md)
 
-Для запуска нужен один файл `CodexUsageTray.exe`. Утилита использует установленный Codex и сохранённый вход в аккаунт.
+A compact Windows utility that shows your remaining five-hour and weekly Codex limits in the system tray. Two percentages on the icon let you monitor both limits while you work. Hover over the icon to see more details.
 
-## Возможности
+Run the utility from a single file, <code>CodexUsageTray.exe</code>. It uses your installed Codex app and its saved sign-in.
 
-- Две строки процентов на одном значке: сверху пятичасовой лимит, снизу недельный.
-- Независимый цвет каждой строки в зависимости от остатка лимита; строки «5 часов» и «Неделя» используют тот же статусный цвет целиком.
-- Карточка с тарифом: название после «Codex · » показывается ПРОПИСНЫМИ буквами и жирным шрифтом.
-- Карточка открывается после 500 мс непрерывного наведения; уход указателя до показа отменяет открытие.
-- Количество доступных ручных сбросов и сроки действия полученных записей.
-- Срок подписки, если он доступен в сохранённых метаданных Codex.
-- Системный шрифт, светлая или тёмная тема Windows, компактная ширина по содержимому.
-- Русский и английский интерфейс с автоматическим выбором языка.
-- Обновление данных раз в 60 секунд и отметка устаревших данных при сбое.
+## Features
 
-## Требования
+- Two percentage rows on one icon: the five-hour limit is on top and the weekly limit is below.
+- Each row has its own color based on the remaining limit. The full “5 hours” and “Week” rows in the card use the same status colors.
+- The plan name after “Codex ·” is shown in uppercase and bold.
+- The card opens after 500 ms of continuous hovering. Moving the pointer away before it appears cancels the opening.
+- The number of available manual limit resets and the expiry dates of returned reset entries.
+- The subscription expiry date, when it is available in Codex's saved metadata.
+- The Windows system font and light or dark theme, with a width that fits the content.
+- Russian and English UI with automatic language selection.
+- Data refreshes every 60 seconds. The card marks data as out of date when a request fails or the data gets old.
 
-- 64-разрядная Windows. Текущая сборка проверена на Windows 11.
-- .NET Framework 4.8.1.
-- Установленный Codex с нативным `codex.exe`, который поддерживает `app-server`, и выполненный вход в аккаунт.
-- Доступ Codex к сервису для получения актуальных лимитов.
+## Requirements
 
-Программа находит `codex.exe` через `PATH` или установленный пакет приложения Codex. Окно самого Codex может быть закрыто.
+- 64-bit Windows. The current build has been checked on Windows 11.
+- .NET Framework 4.8.1.
+- Codex with the native <code>codex.exe</code> that supports <code>app-server</code>, signed in to an account.
+- Codex must be able to reach its service to get current usage limits.
 
-## Запуск
+The utility locates <code>codex.exe</code> through <code>PATH</code> or the installed Codex app package. The Codex window can be closed.
 
-1. Установите Codex и войдите в аккаунт.
-2. Скачайте [CodexUsageTray.exe](https://github.com/btc072/codex-usage-tray/releases/latest/download/CodexUsageTray.exe) или соберите его по инструкции ниже.
-3. Запустите EXE двойным щелчком. Если значок оказался в области скрытых значков, откройте её и при желании перенесите значок на панель задач.
+## Run
 
-Дополнительные файлы рядом с EXE не нужны. Повторный запуск сохраняет один работающий экземпляр.
+1. Install Codex and sign in.
+2. Download <a href="https://github.com/btc072/codex-usage-tray/releases/latest/download/CodexUsageTray.exe">CodexUsageTray.exe</a>, or build it using the instructions below.
+3. Double-click the EXE to run it. If the icon is in the hidden icons area, open that area and move the icon to the taskbar if you prefer.
 
-Наведите указатель на значок, чтобы открыть карточку. Она остаётся открытой при переводе указателя с значка на карточку и скрывается через 500 мс после ухода. `Esc` скрывает карточку, правый щелчок открывает меню **«Выход» / «Exit»**.
+No additional files are needed next to the EXE. If you start the utility again, it keeps only one running instance.
 
-### Совместный запуск с Codex
+Hover over the icon to open the card. It stays open while you move the pointer from the icon to the card, and hides 500 ms after you move away. Press <kbd>Esc</kbd> to hide the card. Right-click the icon to open the <b>Exit</b> menu.
 
-Для настольного приложения Codex в Windows доступен режим `--with-codex`: он открывает Codex и запускает индикатор в трее. Повторное использование ярлыка открывает Codex, сохраняя один экземпляр индикатора.
+### Launching Codex and the utility together
 
-1. Положите EXE из GitHub Releases в постоянную папку, например %LOCALAPPDATA%\Programs\CodexUsageTray\CodexUsageTray.exe.
-2. Создайте ярлык на этот файл. В свойствах ярлыка добавьте `--with-codex` в конце поля **«Объект»**:
+On Windows, the <code>--with-codex</code> option is available for the Codex desktop app. It opens Codex and starts the tray utility. Using the shortcut again opens Codex and keeps a single utility instance.
 
-   ```text
+1. Put the EXE downloaded from GitHub Releases in a permanent folder, for example <code>%LOCALAPPDATA%\Programs\CodexUsageTray\CodexUsageTray.exe</code>.
+2. Create a shortcut to the EXE. In the shortcut's **Target** field, add <code>--with-codex</code> at the end:
+
+   ~~~text
    "%LOCALAPPDATA%\Programs\CodexUsageTray\CodexUsageTray.exe" --with-codex
-   ```
+   ~~~
 
-3. Запускайте Codex через этот общий ярлык.
+3. Use this shortcut to start Codex.
 
-Обычный запуск EXE без параметра открывает только индикатор. Совместный режим использует зарегистрированное приложение `OpenAI.Codex_2p2nqsd0c76g0!App`, поэтому путь запуска не зависит от номера установленной версии Codex. Способ активации через `shell:AppsFolder` описан в [документации Microsoft](https://learn.microsoft.com/en-us/windows/apps/distribute-through-store/how-to-transition-users-from-your-web-unpackaged-app-to-store-packaged-app#how-to-launch-the-store-application-from-your-web-unpackaged-app).
+Starting the EXE without an option opens only the tray utility. The combined mode uses the registered app ID <code>OpenAI.Codex_2p2nqsd0c76g0!App</code>, so the launch path does not depend on the installed Codex version number. Microsoft documents this activation method through <code>shell:AppsFolder</code> in <a href="https://learn.microsoft.com/en-us/windows/apps/distribute-through-store/how-to-transition-users-from-your-web-unpackaged-app-to-store-packaged-app#how-to-launch-the-store-application-from-your-web-unpackaged-app">its documentation</a>.
 
-## Что показывает значок
+## What the icon shows
 
-На значке отображается **оставшийся** лимит. Цвет каждой строки определяется отдельно.
+The icon shows the **remaining** limit. Each row gets its own color.
 
-| Остаток | Цвет |
+| Remaining | Color |
 | --- | --- |
-| Более 30% | Зелёный |
-| Более 10%, до 30% включительно | Жёлтый |
-| 10% и меньше | Красный |
-| Достоверных данных нет | Серый прочерк |
+| More than 30% | Green |
+| More than 10%, up to and including 30% | Yellow |
+| 10% or less | Red |
+| No reliable data | Gray dash |
 
-Фон значка прозрачный, цифры непрозрачные. Неизвестное значение не подменяется нулём.
+The icon has a transparent background and opaque digits. An unknown value is not shown as zero.
 
-## Карточка
+## Card
 
-Все строки выровнены по центру; строки с процентами выделены жирным шрифтом. Ширина окна подбирается по тексту. Справа и до панели задач оставлен одинаковый отступ 6 пикселей. Заголовка окна и системных кнопок нет. Даты показываются в часовом поясе Windows.
+All rows are centered. Percentage rows are bold. The window width fits the text. The right edge and taskbar each have a 6-pixel gap. The card has no title bar or system buttons. Dates use the Windows time zone.
 
-Ниже приведены демонстрационные данные. Состав строк зависит от ответа Codex.
+The data below is an example. The rows shown depend on the Codex response.
 
-**Русский интерфейс:**
+**Russian UI:**
 
-```text
+~~~text
 Codex · Plus
 
 5 часов - 75%
@@ -86,11 +88,11 @@ Codex · Plus
 До: 31.01.2030 23:59
 
 Подписка до: 31.01.2030 23:59
-```
+~~~
 
-**English interface:**
+**English UI:**
 
-```text
+~~~text
 Codex · Plus
 
 5 hours - 75%
@@ -105,47 +107,47 @@ Limit resets: 1
 Until: 31.01.2030 23:59
 
 Subscription until: 31.01.2030 23:59
-```
+~~~
 
-Сервис может вернуть количество сбросов без подробного списка. Строки со сроками показываются при наличии соответствующих записей. Сохранённый срок подписки может устареть; это не подтверждённая дата следующего платежа.
+The service may return a reset count without a detailed list. Expiry rows are shown when the corresponding entries are available. A saved subscription expiry date may be out of date; it does not confirm the next payment date.
 
-### Выбор языка
+### Language selection
 
-Язык выбирается при запуске по языку интерфейса Windows **или региональному формату**:
+At startup, the UI language is selected using the Windows display language **or regional format**:
 
-- **Русский**, если хотя бы одна из этих настроек относится к Армении, Азербайджану, Беларуси, Эстонии, Грузии, Казахстану, Кыргызстану, Латвии, Литве, Молдове, России, Таджикистану, Туркменистану, Украине или Узбекистану.
-- **Английский** во всех остальных случаях.
+- **Russian** is used if either setting belongs to Armenia, Azerbaijan, Belarus, Estonia, Georgia, Kazakhstan, Kyrgyzstan, Latvia, Lithuania, Moldova, Russia, Tajikistan, Turkmenistan, Ukraine, or Uzbekistan.
+- **English** is used in all other cases.
 
-Например, английский интерфейс Windows с русским региональным форматом включает русский язык программы. После изменения настроек языка перезапустите утилиту.
+For example, an English Windows display language with a Russian regional format selects Russian for the utility. Restart it after changing Windows language settings.
 
-## Получение данных
+## Getting data
 
-Утилита раз в 60 секунд запускает скрытый дочерний процесс `codex app-server --listen stdio://`, читает лимиты и завершает этот процесс. У запроса есть тайм-аут 15 секунд; опросы не перекрываются.
+Every 60 seconds, the utility starts a hidden child process, <code>codex app-server --listen stdio://</code>, reads the usage limits, and exits the process. Each request has a 15-second timeout. Requests do not overlap.
 
-Для чтения используется `account/rateLimits/read`; при необходимости тариф уточняется через `account/read`. Запросы к модели и расходование ручных сбросов программа не выполняет. Авторизацией управляет установленный Codex. Нужные метаданные подписки разбираются локально в памяти; программа не сохраняет токены в свои файлы.
+The utility calls <code>account/rateLimits/read</code>. If needed, it gets the plan name with <code>account/read</code>. It does not send model requests or use manual limit resets. The installed Codex app handles sign-in. Subscription metadata is read locally from Codex's saved authentication data. The utility does not save tokens in its own files.
 
-При ошибке остаётся последний успешный результат. Предупреждение появляется при сбое или возрасте данных от 120 секунд. Обратный отсчёт обновляется только при открытой карточке. Автозапуск и настройки Windows программа не меняет.
+If a request fails, the last successful result stays visible. A warning appears after a failure or when the data is at least 120 seconds old. The countdown updates only while the card is open. The utility does not change Windows startup or settings.
 
-## Сборка
+## Build
 
-Исходный код находится в папке src/. Подробности сборки и выпуска приведены в [docs/BUILDING.md](docs/BUILDING.md).
+The source code is in <code>src/</code>. See <a href="docs/BUILDING.md">docs/BUILDING.md</a> for build and release instructions.
 
-Собранный EXE появляется в папке dist/ и не входит в Git. Файл для пользователей прикрепляется к GitHub Release.
+The built EXE appears in <code>build/</code>, which is not included in Git. The GitHub Release includes the file for users.
 
-Из корня проекта запустите:
+Run this command from the project root:
 
 ~~~powershell
 .\Check-Local.ps1
 ~~~
 
-Скрипт собирает приложение в папку dist/.
+The script builds the application in <code>build/</code>.
 
-## Сообщения об ошибках и участие
+## Issues and contributions
 
-Для ошибок и предложений используйте раздел **Issues** репозитория. Укажите версию Windows, масштаб экрана, действия для воспроизведения, ожидаемый и фактический результат. Изменения можно предложить через pull request с кратким описанием и результатами соответствующих проверок.
+Use the repository's **Issues** section to report a problem or suggest an improvement. Include the Windows version, display scaling, steps to reproduce, and expected and actual results. You can propose changes in a pull request with a short description and the relevant check results.
 
-Основной исходник находится в [src/CodexUsageTray.cs](src/CodexUsageTray.cs).
+The main source file is <a href="src/CodexUsageTray.cs">src/CodexUsageTray.cs</a>.
 
-## Сторонний код
+## Third-party code
 
-Отдельные приёмы адаптированы из проектов Tooblippe/codex-usage и VictorZakharov/codex-usage. Их уведомления MIT сохранены в [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt) и встроены в EXE. Происхождение использованных частей и версии исходников указаны в этом файле.
+Some techniques are adapted from <a href="https://github.com/Tooblippe/codex-usage">Tooblippe/codex-usage</a> and <a href="https://github.com/VictorZakharov/codex-usage">VictorZakharov/codex-usage</a>. Their MIT notices are preserved in <a href="THIRD-PARTY-NOTICES.txt">THIRD-PARTY-NOTICES.txt</a> and embedded in the EXE. The source and versions of the adapted parts are listed in that file.
